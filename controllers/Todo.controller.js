@@ -1,11 +1,11 @@
 import Todo from "../models/Todoschema.js";
 const create = async (req, res) => {
   try {
-    if (!req.body.task) {
+    if (!req.body.taskwa) {
       return res.json({ error: "Task is required" });
     }
     const newTodo = new Todo({
-      task: req.body.task,
+      task: req.body.taskwa,
       completed: false,
     });
     await newTodo.save();
@@ -50,4 +50,17 @@ const remove = async (req, res) => {
     res.json({ error: "error" });
   }
 };
-export { create, read, update, remove };
+
+const toggle = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const todo = await Todo.findById(id);
+    todo.completed = !todo.completed;
+    await todo.save();
+    res.json(todo);
+  } catch (error) {
+    res.json({ error: "error" });
+  }
+}
+
+export { create, read, update, remove, toggle };
