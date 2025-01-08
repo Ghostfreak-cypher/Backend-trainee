@@ -9,9 +9,11 @@ const create = async (req, res) => {
       completed: false,
     });
     await newTodo.save();
+
+    res.json({ status: 200, data: newTodo});
   }
   catch (error) {
-   res.json({ error: "error" });
+    res.json({ error: "error" });
   }
 };
 
@@ -20,18 +22,18 @@ const read = async (req, res) => {
     const todo = await Todo.find();
     res.json(todo);
   }
-  catch(error){
+  catch (error) {
     res.json({ error: "error" });
   }
 };
 const update = async (req, res) => {
   const id = req.params.id;
   try {
-      const todo = await Todo.findById(id);
-      todo.task = req.body.task;
-      await todo.save();
-      res.json(todo);
-    
+    const todo = await Todo.findById(id);
+    todo.task = req.body.task;
+    await todo.save();
+    res.json(todo);
+
   } catch (error) {
     res.json({ error: "error" });
   }

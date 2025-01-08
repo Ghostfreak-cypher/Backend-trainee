@@ -3,7 +3,7 @@ import express from "express";
 import connectDB from "./Database/todo.database.js";
 import Authrouter from "./routers/signUp.Router.js";
 const app = express();
-const port = 3000;
+const port = 8005;
 app.use(express.json());
 app.use("/Auth", Authrouter);
 app.use("/Todo", Todorouter);
