@@ -1,16 +1,17 @@
+import { response } from "express";
 import Todo from "../models/Todoschema.js";
 const create = async (req, res) => {
   try {
-    if (!req.body.taskwa) {
+    if (!req.body.task) {
       return res.json({ error: "Task is required" });
     }
     const newTodo = new Todo({
-      task: req.body.taskwa,
+      task: req.body.task,
       completed: false,
     });
     await newTodo.save();
 
-    res.json({ status: 200, data: newTodo});
+    res.json({ success: true, status: 201, data: newTodo });
   }
   catch (error) {
     res.json({ error: "error" });
@@ -20,10 +21,11 @@ const create = async (req, res) => {
 const read = async (req, res) => {
   try {
     const todo = await Todo.find();
-    res.json(todo);
+    console.log(todo)
+    res.json({ success: true, status: 200, data: todo });
   }
   catch (error) {
-    res.json({ error: "error" });
+    res.json({ success: false, status: 500, error: "error" });
   }
 };
 const update = async (req, res) => {
